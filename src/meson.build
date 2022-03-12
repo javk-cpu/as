@@ -13,16 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-project(
-        'javk-as',
-        'c',
-        version : '0.0.0',
-        license : 'GPL-3.0-or-later',
-        default_options : [
-                'warning_level=3',
-                'c_std=c17',
-        ],
+as_sources = files(
+        'main.c',
 )
 
 
-subdir('src')
+executable(
+        'javk-as',
+        sources : as_sources,
+)
