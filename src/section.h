@@ -53,6 +53,7 @@ typedef struct section_s {
 
 uint8_t   *section2bin(const section_t *section);
 section_t *sectionalloc(size_t instructions);
+void       sectionfree(section_t *section);
 
 
 #endif /* JAVK_AS_SECTION */

@@ -54,3 +54,11 @@ error:
 	free(tmp);
 	return NULL;
 }
+
+void sectionfree(section_t *section)
+{
+	if (!section) return;
+
+	free(section->instruction);
+	free(section);
+}
