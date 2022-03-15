@@ -24,6 +24,22 @@
 #include <stdint.h>
 
 
+enum opcodes {
+	NOP,  // no operation
+	LDR,  // load register
+	LDH,  // load high nibble
+	LDL,  // load low nibble
+	MOV,  // move register
+	// TODO: branch instructions
+	ADD,  // add
+	SUB,  // subtract
+	AND,  // and
+	ORR,  // inclusive or
+	EOR,  // exclusive or
+	LSL,  // logical shift left
+	LSR,  // logical shift right
+};
+
 typedef struct instruction_s {
 	unsigned opcode  : 4;
 	unsigned operand : 4;
