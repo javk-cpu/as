@@ -15,6 +15,7 @@
 
 as_sources = files(
         'main.c',
+        'section.c',
 )
 
 
