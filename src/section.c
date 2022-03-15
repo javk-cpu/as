@@ -17,3 +17,23 @@
  */
 
 #include "section.h"
+
+#include <stddef.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+
+uint8_t *section2bin(const section_t *section)
+{
+	uint8_t *bin = malloc(sizeof(uint8_t) * section->section_siz);
+	if (!bin) return NULL;
+
+	const instruction_t *instruction = section->instruction;
+	for (size_t i = 0; i < section->section_siz; i++) {
+		bin[i]  = instruction->opcode << 4;
+		bin[i] |= instruction->operand;
+		++instruction;
+	}
+
+	return bin;
+}

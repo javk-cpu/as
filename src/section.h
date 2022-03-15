@@ -21,6 +21,7 @@
 
 
 #include <stddef.h>
+#include <stdint.h>
 
 
 typedef struct instruction_s {
@@ -32,6 +33,9 @@ typedef struct section_s {
 	instruction_t *instruction;
 	size_t         section_siz;
 } section_t;
+
+
+uint8_t *section2bin(const section_t *section);
 
 
 #endif /* JAVK_AS_SECTION */
