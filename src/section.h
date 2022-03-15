@@ -20,4 +20,10 @@
 #define JAVK_AS_SECTION
 
 
+typedef struct instruction_s {
+	unsigned opcode  : 4;
+	unsigned operand : 4;
+} instruction_t;
+
+
 #endif /* JAVK_AS_SECTION */
