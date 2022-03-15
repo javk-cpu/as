@@ -37,3 +37,20 @@ uint8_t *section2bin(const section_t *section)
 
 	return bin;
 }
+
+section_t *sectionalloc(size_t instructions)
+{
+	section_t *tmp = malloc(sizeof(section_t));
+	if (!tmp) return NULL;
+
+	tmp->instruction = malloc(sizeof(instruction_t) * instructions);
+	if (!tmp->instruction) goto error;
+
+	tmp->section_siz = instructions;
+
+	return tmp;
+
+error:
+	free(tmp);
+	return NULL;
+}
