@@ -41,7 +41,7 @@ typedef struct ht_s {
 
 void *ht_get(const ht_t *ht, const void *key, size_t len);
 ht_t *htalloc(void);
-void  htfree(ht_t *ht);
+void  htfree(ht_t *ht, void (*free_val)(void *ptr));
 
 
 #endif /* JAVK_AS_HASHTABLE */

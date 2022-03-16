@@ -66,15 +66,26 @@ error:
 	return NULL;
 }
 
-void htfree(ht_t *ht)
+void htfree(ht_t *ht, void (*free_val)(void *ptr))
 {
 	if (!ht) return;
 
 	ht_ent_t *ent = ht->ent;
-	while (ht->cap) {
-		if (ent->key) free(ent->key);
-		--ht->cap;
-		++ent;
+	if (free_val) {
+		while (ht->cap) {
+			if (ent->key) {
+				free(ent->key);
+				if (ent->val) free_val(ent->val);
+			}
+			--ht->cap;
+			++ent;
+		}
+	} else {
+		while (ht->cap) {
+			if (ent->key) free(ent->key);
+			--ht->cap;
+			++ent;
+		}
 	}
 
 	free(ht->ent);
