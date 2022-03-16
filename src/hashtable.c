@@ -136,3 +136,35 @@ static int ht_set_private(ht_t *ht, const void *key, size_t len, void *val)
 
 	return 0;
 }
+
+static int rehash(ht_t *ht)
+{
+	ht_ent_t *oldent = ht->ent;
+	size_t    oldcap = ht->cap;
+
+	ht->cap *= 2;
+	if (oldcap > ht->cap) goto error;
+
+	ht->ent = calloc(ht->cap, sizeof(ht_ent_t));
+	if (!ht->ent) goto error;
+
+	ht->cnt = 0;
+
+	ht_ent_t *ent = oldent;
+	for (size_t i = 0; i < oldcap; i++) {
+		if (ent->key)
+			ht_set_private(ht, ent->key, ent->key_len, ent->val);
+
+		++ent;
+	}
+
+	free(oldent);
+
+	return 0;
+
+error:
+	ht->ent = oldent;
+	ht->cap = oldcap;
+
+	return -1;
+}
