@@ -14,6 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 as_sources = files(
+        'hashtable.c',
         'main.c',
         'section.c',
 )
