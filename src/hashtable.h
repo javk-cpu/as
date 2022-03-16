@@ -23,6 +23,9 @@
 #include <stddef.h>
 
 
+#define HT_DEFAULT_CAP 512
+
+
 typedef struct ht_ent_s {
 	const void *key;
 	size_t      key_len;
