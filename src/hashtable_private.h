@@ -22,5 +22,15 @@
 
 #include "hashtable.h"
 
+#include <stddef.h>
+#include <stdint.h>
+
+
+#define FNV_OFFSET_BASIS 0xcbf29ce484222325UL
+#define FNV_PRIME        0x100000001b3UL
+
+
+static uint64_t fnv1a_hash(const void *key, size_t len);
+
 
 #endif /* JAVK_AS_HASHTABLE_PRIVATE */

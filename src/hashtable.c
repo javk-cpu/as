@@ -20,6 +20,7 @@
 #include "hashtable_private.h"
 
 #include <stddef.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 
@@ -55,4 +56,18 @@ void htfree(ht_t *ht)
 	}
 
 	free(ht);
+}
+
+
+static uint64_t fnv1a_hash(const void *key, size_t len)
+{
+	uint64_t hash = FNV_OFFSET_BASIS;
+
+	const unsigned char *byte = key;
+	for (size_t i = 0; i < len; i++, byte++) {
+		hash ^= *byte;
+		hash *= FNV_PRIME;
+	}
+
+	return hash;
 }
