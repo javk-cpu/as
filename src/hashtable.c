@@ -22,7 +22,29 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
+
+void *ht_get(const ht_t *ht, const void *key, size_t len)
+{
+	size_t i = (size_t) (fnv1a_hash(key, len) & (uint64_t) (ht->cap - 1));
+
+	while (ht->ent[i].key) {
+		if (i >= ht->cap) i = 0;
+
+		if (len != ht->ent[i].key_len) {
+			++i;
+			continue;
+		}
+
+		if (!memcmp(key, ht->ent[i].key, len))
+			return ht->ent[i].val;
+
+		++i;
+	}
+
+	return NULL;
+}
 
 ht_t *htalloc(void)
 {
