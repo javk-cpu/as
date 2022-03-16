@@ -29,5 +29,11 @@ typedef struct ht_ent_s {
 	void       *val;
 } ht_ent_t;
 
+typedef struct ht_s {
+	ht_ent_t *ent;
+	size_t    cap;
+	size_t    len;
+} ht_t;
+
 
 #endif /* JAVK_AS_HASHTABLE */
