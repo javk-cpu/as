@@ -22,6 +22,7 @@
 
 #include "hashtable.h"
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -31,7 +32,7 @@
 
 
 static uint64_t fnv1a_hash(const void *key, size_t len);
-static int      ht_set_private(ht_t *ht, void *key, size_t len, void *val);
+static int      ht_set_private(ht_t *ht, void *key, size_t len, void *val, bool cpy);
 static int      rehash(ht_t *ht);
 
 

@@ -19,6 +19,7 @@
 #include "hashtable.h"
 #include "hashtable_private.h"
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -50,20 +51,11 @@ void *ht_get(const ht_t *ht, const void *key, size_t len)
 
 int ht_set(ht_t *ht, const void *key, size_t len, void *val)
 {
-	void *cpy = malloc(len);
-	if (!cpy) return -1;
-	memcpy(cpy, key, len);
+	if (ht->cnt >= (ht->cap / 2) && !rehash(ht)) return -1;
 
-	if (ht->cnt >= (ht->cap / 2) && !rehash(ht)) goto error;
-
-	if (ht_set_private(ht, cpy, len, val)) goto error;
+	if (ht_set_private(ht, (void*) key, len, val, true)) return -1;
 
 	return 0;
-
-error:
-	free(cpy);
-
-	return -1;
 }
 
 ht_t *htalloc(void)
@@ -124,7 +116,7 @@ static uint64_t fnv1a_hash(const void *key, size_t len)
 	return hash;
 }
 
-static int ht_set_private(ht_t *ht, void *key, size_t len, void *val)
+static int ht_set_private(ht_t *ht, void *key, size_t len, void *val, bool cpy)
 {
 	if (!key || !len) return -1;
 
@@ -145,6 +137,14 @@ static int ht_set_private(ht_t *ht, void *key, size_t len, void *val)
 		}
 
 		++i;
+	}
+
+	if (cpy) {
+		void *tmp = malloc(len);
+		if (!tmp) return -1;
+
+		memcpy(tmp, key, len);
+		key = tmp;
 	}
 
 	ht->ent[i].key     = key;
@@ -171,7 +171,13 @@ static int rehash(ht_t *ht)
 	ht_ent_t *ent = oldent;
 	for (size_t i = 0; i < oldcap; i++) {
 		if (ent->key)
-			ht_set_private(ht, ent->key, ent->key_len, ent->val);
+			ht_set_private(
+				ht,
+				ent->key,
+				ent->key_len,
+				ent->val,
+				false
+			);
 
 		++ent;
 	}
