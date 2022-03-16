@@ -39,4 +39,7 @@ typedef struct ht_s {
 } ht_t;
 
 
+ht_t *htalloc(size_t cap);
+
+
 #endif /* JAVK_AS_HASHTABLE */

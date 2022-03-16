@@ -17,3 +17,27 @@
  */
 
 #include "hashtable.h"
+
+#include <stddef.h>
+#include <stdlib.h>
+
+
+ht_t *htalloc(size_t cap)
+{
+	ht_t *tmp = malloc(sizeof(ht_t));
+	if (!tmp) return NULL;
+
+	if (!cap) cap = HT_DEFAULT_CAP;
+
+	tmp->ent = calloc(cap, sizeof(ht_ent_t));
+	if (!tmp->ent) goto error;
+
+	tmp->cap = cap;
+	tmp->cnt = 0;
+
+	return tmp;
+
+error:
+	free(tmp);
+	return NULL;
+}
