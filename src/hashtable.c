@@ -129,12 +129,9 @@ static int ht_set_private(ht_t *ht, const void *key, size_t len, void *val)
 		++i;
 	}
 
-	ht->ent[i].key = malloc(len);
-	if (!ht->ent[i].key) return -1;
-	memcpy(ht->ent[i].key, key, len);
-
+	ht->ent[i].key     = key;
 	ht->ent[i].key_len = len;
-	ht->ent[i].val = val;
+	ht->ent[i].val     = val;
 	++ht->cnt;
 
 	return 0;
