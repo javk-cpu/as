@@ -132,7 +132,6 @@ static int ht_set_private(ht_t *ht, void *key, size_t len, void *val, bool cpy)
 
 		if (!memcmp(key, ht->ent[i].key, len)) {
 			ht->ent[i].val = val;
-			++ht->cnt;
 			return 0;
 		}
 
