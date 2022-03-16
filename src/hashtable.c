@@ -41,3 +41,17 @@ error:
 	free(tmp);
 	return NULL;
 }
+
+void htfree(ht_t *ht)
+{
+	if (!ht) return;
+
+	ht_ent_t *ent = ht->ent;
+	while (ht->cap) {
+		if (ent->key) free(ent->key);
+		--ht->cap;
+		++ent;
+	}
+
+	free(ht);
+}
