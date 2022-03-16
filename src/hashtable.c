@@ -53,6 +53,7 @@ void htfree(ht_t *ht)
 		++ent;
 	}
 
+	free(ht->ent);
 	free(ht);
 }
 
