@@ -106,7 +106,7 @@ static uint64_t fnv1a_hash(const void *key, size_t len)
 	return hash;
 }
 
-static int ht_set_private(ht_t *ht, const void *key, size_t len, void *val)
+static int ht_set_private(ht_t *ht, void *key, size_t len, void *val)
 {
 	if (!key || !len) return -1;
 
