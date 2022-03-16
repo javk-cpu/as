@@ -105,3 +105,37 @@ static uint64_t fnv1a_hash(const void *key, size_t len)
 
 	return hash;
 }
+
+static int ht_set_private(ht_t *ht, const void *key, size_t len, void *val)
+{
+	if (!key || !len) return -1;
+
+	size_t i = (size_t) (fnv1a_hash(key, len) & (uint64_t) (ht->cap - 1));
+
+	while (ht->ent[i].key) {
+		if (i >= ht->cap) i = 0;
+
+		if (len != ht->ent[i].key_len) {
+			++i;
+			continue;
+		}
+
+		if (!memcmp(key, ht->ent[i].key, len)) {
+			ht->ent[i].val = val;
+			++ht->cnt;
+			return 0;
+		}
+
+		++i;
+	}
+
+	ht->ent[i].key = malloc(len);
+	if (!ht->ent[i].key) return -1;
+	memcpy(ht->ent[i].key, key, len);
+
+	ht->ent[i].key_len = len;
+	ht->ent[i].val = val;
+	++ht->cnt;
+
+	return 0;
+}

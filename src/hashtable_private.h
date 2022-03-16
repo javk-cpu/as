@@ -31,6 +31,7 @@
 
 
 static uint64_t fnv1a_hash(const void *key, size_t len);
+static int      ht_set_private(ht_t *ht, const void *key, size_t len, void *val);
 
 
 #endif /* JAVK_AS_HASHTABLE_PRIVATE */
