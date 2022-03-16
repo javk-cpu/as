@@ -35,7 +35,7 @@ typedef struct ht_ent_s {
 typedef struct ht_s {
 	ht_ent_t *ent;
 	size_t    cap;
-	size_t    len;
+	size_t    cnt;
 } ht_t;
 
 
