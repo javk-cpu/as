@@ -39,7 +39,7 @@ typedef struct ht_s {
 } ht_t;
 
 
-ht_t *htalloc(size_t cap);
+ht_t *htalloc(void);
 void  htfree(ht_t *ht);
 
 

@@ -24,17 +24,15 @@
 #include <stdlib.h>
 
 
-ht_t *htalloc(size_t cap)
+ht_t *htalloc(void)
 {
 	ht_t *tmp = malloc(sizeof(ht_t));
 	if (!tmp) return NULL;
 
-	if (!cap) cap = HT_DEFAULT_CAP;
-
-	tmp->ent = calloc(cap, sizeof(ht_ent_t));
+	tmp->ent = calloc(HT_DEFAULT_CAP, sizeof(ht_ent_t));
 	if (!tmp->ent) goto error;
 
-	tmp->cap = cap;
+	tmp->cap = HT_DEFAULT_CAP;
 	tmp->cnt = 0;
 
 	return tmp;
