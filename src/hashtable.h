@@ -27,9 +27,9 @@
 
 
 typedef struct ht_ent_s {
-	const void *key;
-	size_t      key_len;
-	void       *val;
+	void   *key;
+	size_t  key_len;
+	void   *val;
 } ht_ent_t;
 
 typedef struct ht_s {
