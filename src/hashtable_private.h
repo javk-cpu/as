@@ -1,5 +1,5 @@
 /*
- * hashtable.c -- hash table implementation
+ * hashtable_private.h -- hash table implementation
  * Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,43 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#ifndef JAVK_AS_HASHTABLE_PRIVATE
+#define JAVK_AS_HASHTABLE_PRIVATE
+
+
 #include "hashtable.h"
-#include "hashtable_private.h"
-
-#include <stddef.h>
-#include <stdlib.h>
 
 
-ht_t *htalloc(size_t cap)
-{
-	ht_t *tmp = malloc(sizeof(ht_t));
-	if (!tmp) return NULL;
-
-	if (!cap) cap = HT_DEFAULT_CAP;
-
-	tmp->ent = calloc(cap, sizeof(ht_ent_t));
-	if (!tmp->ent) goto error;
-
-	tmp->cap = cap;
-	tmp->cnt = 0;
-
-	return tmp;
-
-error:
-	free(tmp);
-	return NULL;
-}
-
-void htfree(ht_t *ht)
-{
-	if (!ht) return;
-
-	ht_ent_t *ent = ht->ent;
-	while (ht->cap) {
-		if (ent->key) free(ent->key);
-		--ht->cap;
-		++ent;
-	}
-
-	free(ht);
-}
+#endif /* JAVK_AS_HASHTABLE_PRIVATE */
