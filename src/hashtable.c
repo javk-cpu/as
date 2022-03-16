@@ -56,7 +56,7 @@ int ht_set(ht_t *ht, const void *key, size_t len, void *val)
 
 	if (ht->cnt >= (ht->cap / 2) && !rehash(ht)) goto error;
 
-	if (!ht_set_private(ht, cpy, len, val)) goto error;
+	if (ht_set_private(ht, cpy, len, val)) goto error;
 
 	return 0;
 
