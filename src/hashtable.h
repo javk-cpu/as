@@ -40,6 +40,7 @@ typedef struct ht_s {
 
 
 void *ht_get(const ht_t *ht, const void *key, size_t len);
+int   ht_set(ht_t *ht, const void *key, size_t len, void *val);
 ht_t *htalloc(void);
 void  htfree(ht_t *ht, void (*free_val)(void *ptr));
 

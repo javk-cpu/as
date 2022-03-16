@@ -48,6 +48,24 @@ void *ht_get(const ht_t *ht, const void *key, size_t len)
 	return NULL;
 }
 
+int ht_set(ht_t *ht, const void *key, size_t len, void *val)
+{
+	void *cpy = malloc(len);
+	if (!cpy) return -1;
+	memcpy(cpy, key, len);
+
+	if (ht->cnt >= (ht->cap / 2) && !rehash(ht)) goto error;
+
+	if (!ht_set_private(ht, cpy, len, val)) goto error;
+
+	return 0;
+
+error:
+	free(cpy);
+
+	return -1;
+}
+
 ht_t *htalloc(void)
 {
 	ht_t *tmp = malloc(sizeof(ht_t));
