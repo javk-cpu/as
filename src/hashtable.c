@@ -27,6 +27,8 @@
 
 void *ht_get(const ht_t *ht, const void *key, size_t len)
 {
+	if (!key || !len) return NULL;
+
 	size_t i = (size_t) (fnv1a_hash(key, len) & (uint64_t) (ht->cap - 1));
 
 	while (ht->ent[i].key) {
