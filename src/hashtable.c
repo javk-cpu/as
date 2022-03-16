@@ -33,8 +33,6 @@ void *ht_get(const ht_t *ht, const void *key, size_t len)
 	size_t i = (size_t) (fnv1a_hash(key, len) & (uint64_t) (ht->cap - 1));
 
 	while (ht->ent[i].key) {
-		if (i >= ht->cap) i = 0;
-
 		if (len != ht->ent[i].key_len) {
 			++i;
 			continue;
@@ -44,6 +42,7 @@ void *ht_get(const ht_t *ht, const void *key, size_t len)
 			return ht->ent[i].val;
 
 		++i;
+		if (i >= ht->cap) i = 0;
 	}
 
 	return NULL;
@@ -123,8 +122,6 @@ static int ht_set_private(ht_t *ht, void *key, size_t len, void *val, bool cpy)
 	size_t i = (size_t) (fnv1a_hash(key, len) & (uint64_t) (ht->cap - 1));
 
 	while (ht->ent[i].key) {
-		if (i >= ht->cap) i = 0;
-
 		if (len != ht->ent[i].key_len) {
 			++i;
 			continue;
@@ -136,6 +133,7 @@ static int ht_set_private(ht_t *ht, void *key, size_t len, void *val, bool cpy)
 		}
 
 		++i;
+		if (i >= ht->cap) i = 0;
 	}
 
 	if (cpy) {
