@@ -35,6 +35,7 @@ void *ht_get(const ht_t *ht, const void *key, size_t len)
 	while (ht->ent[i].key) {
 		if (len != ht->ent[i].key_len) {
 			++i;
+			if (i >= ht->cap) i = 0;
 			continue;
 		}
 
@@ -124,6 +125,7 @@ static int ht_set_private(ht_t *ht, void *key, size_t len, void *val, bool cpy)
 	while (ht->ent[i].key) {
 		if (len != ht->ent[i].key_len) {
 			++i;
+			if (i >= ht->cap) i = 0;
 			continue;
 		}
 
