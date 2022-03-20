@@ -18,6 +18,12 @@
 
 #include "parser.h"
 
+#include <stddef.h>
+
+#include "hashtable.h"
+
+
+static ht_t *opcode_ht;
 
 static char *opcode_str[] = {
 	"NOP",  // no operation
@@ -34,3 +40,24 @@ static char *opcode_str[] = {
 	"LSL",  // logical shift left
 	"LSR",  // logical shift right
 };
+
+
+int parser_init(void)
+{
+	opcode_ht = htalloc();
+	if (!opcode_ht) return -1;
+
+	char **str = opcode_str;
+	for (size_t i = 0; i < sizeof(opcode_str) / sizeof(char*); i++) {
+		if (ht_set(opcode_ht, *str, sizeof(char*), NULL) < 0)
+			goto error;
+
+		++str;
+	}
+
+	return 0;
+
+error:
+	htfree(opcode_ht, NULL);
+	return -1;
+}
