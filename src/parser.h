@@ -20,7 +20,7 @@
 #define JAVK_AS_PARSER
 
 
-int parser_init(void);
-
+int  parser_init(void);
+void parser_rm(void);
 
 #endif /* JAVK_AS_PARSER */

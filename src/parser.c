@@ -61,3 +61,8 @@ error:
 	htfree(opcode_ht, NULL);
 	return -1;
 }
+
+void parser_rm(void)
+{
+	htfree(opcode_ht, NULL);
+}
