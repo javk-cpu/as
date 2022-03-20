@@ -40,6 +40,15 @@ enum opcodes {
 	LSR,  // logical shift right
 };
 
+enum registers {
+	A,   // accumulator
+	B,   // b register
+	C,   // c register
+	// TODO: finalize registers
+	SP,  // stack pointer
+	PC,  // program counter
+};
+
 typedef struct instruction_s {
 	unsigned opcode  : 4;
 	unsigned operand : 4;
