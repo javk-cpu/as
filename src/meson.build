@@ -16,6 +16,7 @@
 as_sources = files(
         'hashtable.c',
         'main.c',
+        'parser.c',
         'section.c',
 )
 
