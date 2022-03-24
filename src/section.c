@@ -63,3 +63,14 @@ void sectionfree(section_t *sec)
 	free(sec->instr);
 	free(sec);
 }
+
+int sectionrealloc(section_t *sec, size_t siz)
+{
+	instruction_t *tmp = realloc(sec->instr, sizeof(instruction_t) * siz);
+	if (!tmp) return -1;
+
+	sec->instr = tmp;
+	sec->siz   = siz;
+
+	return 0;
+}
