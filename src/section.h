@@ -55,14 +55,15 @@ typedef struct instruction_s {
 } instruction_t;
 
 typedef struct section_s {
-	instruction_t *instruction;
-	size_t         section_siz;
+	instruction_t *instr;
+	size_t         cnt;
+	size_t         siz;
 } section_t;
 
 
-uint8_t   *section2bin(const section_t *section);
-section_t *sectionalloc(size_t instructions);
-void       sectionfree(section_t *section);
+uint8_t   *section2bin(const section_t *sec);
+section_t *sectionalloc(size_t siz);
+void       sectionfree(section_t *sec);
 
 
 #endif /* JAVK_AS_SECTION */

@@ -23,30 +23,31 @@
 #include <stdlib.h>
 
 
-uint8_t *section2bin(const section_t *section)
+uint8_t *section2bin(const section_t *sec)
 {
-	uint8_t *bin = malloc(sizeof(uint8_t) * section->section_siz);
+	uint8_t *bin = malloc(sizeof(uint8_t) * sec->cnt);
 	if (!bin) return NULL;
 
-	const instruction_t *instruction = section->instruction;
-	for (size_t i = 0; i < section->section_siz; i++) {
-		bin[i]  = instruction->opcode << 4;
-		bin[i] |= instruction->operand;
-		++instruction;
+	const instruction_t *instr = sec->instr;
+	for (size_t i = 0; i < sec->cnt; i++) {
+		bin[i]  = instr->opcode << 4;
+		bin[i] |= instr->operand;
+		++instr;
 	}
 
 	return bin;
 }
 
-section_t *sectionalloc(size_t instructions)
+section_t *sectionalloc(size_t siz)
 {
 	section_t *tmp = malloc(sizeof(section_t));
 	if (!tmp) return NULL;
 
-	tmp->instruction = malloc(sizeof(instruction_t) * instructions);
-	if (!tmp->instruction) goto error;
+	tmp->instr = malloc(sizeof(instruction_t) * siz);
+	if (!tmp->instr) goto error;
 
-	tmp->section_siz = instructions;
+	tmp->cnt = 0;
+	tmp->siz = siz;
 
 	return tmp;
 
@@ -55,10 +56,10 @@ error:
 	return NULL;
 }
 
-void sectionfree(section_t *section)
+void sectionfree(section_t *sec)
 {
-	if (!section) return;
+	if (!sec) return;
 
-	free(section->instruction);
-	free(section);
+	free(sec->instr);
+	free(sec);
 }
