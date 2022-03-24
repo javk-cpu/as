@@ -24,46 +24,50 @@
 #include "hashtable.h"
 
 
-static ht_t *opcode_ht;
+static ht_t *keywords_ht;
 
-static char *opcode_str[] = {
-	"NOP",  // no operation
-	"LDR",  // load register
-	"LDH",  // load high nibble
-	"LDL",  // load low nibble
-	"MOV",  // move register
+static keyword_t keywords[] = {
+	/* instructions */
+	{"NOP", 4, NULL},  // no operation
+	{"LDR", 4, NULL},  // load register
+	{"LDH", 4, NULL},  // load high nibble
+	{"LDL", 4, NULL},  // load low nibble
+	{"MOV", 4, NULL},  // move register
 	// TODO: branch instructions
-	"ADD",  // add
-	"SUB",  // subtract
-	"AND",  // and
-	"ORR",  // inclusive or
-	"EOR",  // exclusive or
-	"LSL",  // logical shift left
-	"LSR",  // logical shift right
+	{"ADD", 4, NULL},  // add
+	{"SUB", 4, NULL},  // subtract
+	{"AND", 4, NULL},  // and
+	{"ORR", 4, NULL},  // inclusive or
+	{"EOR", 4, NULL},  // exclusive or
+	{"LSL", 4, NULL},  // logical shift left
+	{"LSR", 4, NULL},  // logical shift right
 };
 
 
 int parser_init(void)
 {
-	opcode_ht = htalloc();
-	if (!opcode_ht) return -1;
+	keywords_ht = htalloc();
+	if (!keywords_ht) return -1;
 
-	char **str = opcode_str;
-	for (size_t i = 0; i < sizeof(opcode_str) / sizeof(char*); i++) {
-		if (ht_set(opcode_ht, *str, sizeof(char*), NULL) < 0)
+	for (size_t i = 0; i < sizeof(keywords) / sizeof(keyword_t); i++) {
+		if (0 > ht_set(
+				keywords_ht,
+				keywords[i].key,
+				keywords[i].len,
+				keywords + i
+			)
+		)
 			goto error;
-
-		++str;
 	}
 
 	return 0;
 
 error:
-	htfree(opcode_ht, NULL);
+	htfree(keywords_ht, NULL);
 	return -1;
 }
 
 void parser_rm(void)
 {
-	htfree(opcode_ht, NULL);
+	htfree(keywords_ht, NULL);
 }

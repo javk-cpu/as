@@ -22,11 +22,14 @@
 
 #include "parser.h"
 
+#include <stddef.h>
+
 #include "section.h"
 
 
 typedef struct keyword_s {
 	char  *key;
+	size_t len;
 	int   (*parser)(section_t *sec, char **tokens);
 } keyword_t;
 
