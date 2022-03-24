@@ -22,5 +22,13 @@
 
 #include "parser.h"
 
+#include "section.h"
+
+
+typedef struct keyword_s {
+	char  *key;
+	int   (*parser)(section_t *sec, char **tokens);
+} keyword_t;
+
 
 #endif /* JAVK_AS_PARSER_PRIVATE */
