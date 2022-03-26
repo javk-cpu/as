@@ -36,6 +36,12 @@ typedef struct keyword_s {
 	int   (*parser)(section_t *sec, char **tokens);
 } keyword_t;
 
+typedef struct register_s {
+	char     *key;
+	size_t    len;
+	unsigned  val;
+} register_t;
+
 
 static int parser_nop(section_t *sec, char **tokens);
 

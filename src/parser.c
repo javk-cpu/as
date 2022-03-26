@@ -25,6 +25,7 @@
 
 
 static ht_t *keywords_ht;
+static ht_t *registers_ht;
 
 static keyword_t keywords[] = {
 	/* instructions */
@@ -43,6 +44,15 @@ static keyword_t keywords[] = {
 	{"LSR", 4, NULL},        // logical shift right
 };
 
+static register_t registers[] = {
+	{"A",  2, A},   // accumulator
+	{"B",  2, B},   // b register
+	{"C",  2, C},   // c register
+	// TODO: finalize registers
+	{"SP", 3, SP},  // stack pointer
+	{"PC", 3, PC},  // program counter
+};
+
 static char tokenbuf[TOKENSIZ];
 
 
@@ -50,6 +60,8 @@ int parser_init(void)
 {
 	keywords_ht = htalloc();
 	if (!keywords_ht) return -1;
+	registers_ht = htalloc();
+	if (!registers_ht) goto error;
 
 	for (size_t i = 0; i < sizeof(keywords) / sizeof(keyword_t); i++) {
 		if (0 > ht_set(
@@ -62,16 +74,29 @@ int parser_init(void)
 			goto error;
 	}
 
+	for (size_t i = 0; i < sizeof(registers) / sizeof(register_t); i++) {
+		if (0 > ht_set(
+				registers_ht,
+				registers[i].key,
+				registers[i].len,
+				registers + i
+			)
+		)
+			goto error;
+	}
+
 	return 0;
 
 error:
-	htfree(keywords_ht, NULL);
+	htfree(keywords_ht,  NULL);
+	htfree(registers_ht, NULL);
 	return -1;
 }
 
 void parser_rm(void)
 {
-	htfree(keywords_ht, NULL);
+	htfree(keywords_ht,  NULL);
+	htfree(registers_ht, NULL);
 }
 
 
