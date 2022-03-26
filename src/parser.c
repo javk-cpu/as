@@ -38,7 +38,7 @@ static keyword_t keywords[] = {
 	// TODO: branch instructions
 	{"ADD", 4, parser_add},  // add
 	{"SUB", 4, parser_sub},  // subtract
-	{"AND", 4, NULL},        // and
+	{"AND", 4, parser_and},  // and
 	{"ORR", 4, NULL},        // inclusive or
 	{"EOR", 4, NULL},        // exclusive or
 	{"LSL", 4, NULL},        // logical shift left
@@ -125,6 +125,11 @@ static int parser_add(section_t *sec, char **tokens)
 static int parser_sub(section_t *sec, char **tokens)
 {
 	return parser_arithmetic(sec, tokens, SUB);
+}
+
+static int parser_and(section_t *sec, char **tokens)
+{
+	return parser_arithmetic(sec, tokens, AND);
 }
 
 
