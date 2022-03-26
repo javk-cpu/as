@@ -37,4 +37,7 @@ typedef struct keyword_s {
 } keyword_t;
 
 
+static int parser_nop(section_t *sec, char **tokens);
+
+
 #endif /* JAVK_AS_PARSER_PRIVATE */

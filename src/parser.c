@@ -28,19 +28,19 @@ static ht_t *keywords_ht;
 
 static keyword_t keywords[] = {
 	/* instructions */
-	{"NOP", 4, NULL},  // no operation
-	{"LDR", 4, NULL},  // load register
-	{"LDH", 4, NULL},  // load high nibble
-	{"LDL", 4, NULL},  // load low nibble
-	{"MOV", 4, NULL},  // move register
+	{"NOP", 4, parser_nop},  // no operation
+	{"LDR", 4, NULL},        // load register
+	{"LDH", 4, NULL},        // load high nibble
+	{"LDL", 4, NULL},        // load low nibble
+	{"MOV", 4, NULL},        // move register
 	// TODO: branch instructions
-	{"ADD", 4, NULL},  // add
-	{"SUB", 4, NULL},  // subtract
-	{"AND", 4, NULL},  // and
-	{"ORR", 4, NULL},  // inclusive or
-	{"EOR", 4, NULL},  // exclusive or
-	{"LSL", 4, NULL},  // logical shift left
-	{"LSR", 4, NULL},  // logical shift right
+	{"ADD", 4, NULL},        // add
+	{"SUB", 4, NULL},        // subtract
+	{"AND", 4, NULL},        // and
+	{"ORR", 4, NULL},        // inclusive or
+	{"EOR", 4, NULL},        // exclusive or
+	{"LSL", 4, NULL},        // logical shift left
+	{"LSR", 4, NULL},        // logical shift right
 };
 
 static char tokenbuf[TOKENSIZ];
@@ -72,4 +72,21 @@ error:
 void parser_rm(void)
 {
 	htfree(keywords_ht, NULL);
+}
+
+
+static int parser_nop(section_t *sec, char **tokens)
+{
+	(void) tokens;
+
+	if (sec->cnt + 1 > sec->siz)
+		if (sectionrealloc(sec, sec->siz * 2) < 0)
+			return -1;
+
+	sec->instr[sec->cnt].opcode  = NOP;
+	sec->instr[sec->cnt].operand = 0;
+
+	++sec->cnt;
+
+	return 0;
 }
