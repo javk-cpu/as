@@ -43,6 +43,8 @@ static keyword_t keywords[] = {
 	{"LSR", 4, NULL},  // logical shift right
 };
 
+static char tokenbuf[TOKENSIZ];
+
 
 int parser_init(void)
 {

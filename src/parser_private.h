@@ -27,6 +27,9 @@
 #include "section.h"
 
 
+#define TOKENSIZ 4
+
+
 typedef struct keyword_s {
 	char  *key;
 	size_t len;
