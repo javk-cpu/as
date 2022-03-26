@@ -119,6 +119,12 @@ static int parser_nop(section_t *sec, char **tokens)
 
 static int parser_add(section_t *sec, char **tokens)
 {
+	return parser_arithmetic(sec, tokens, ADD);
+}
+
+
+static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode)
+{
 	char   *tmp = tokens[1];
 	size_t  i   = 0;
 
@@ -130,11 +136,16 @@ static int parser_add(section_t *sec, char **tokens)
 	register_t *reg = ht_get(registers_ht, tokenbuf, i);
 	if (!reg) return -1;
 
+	// only 8-bit registers can be used
+	register_t *bad = registers + (sizeof(registers) / sizeof(register_t));
+	if (reg == bad - 1) return -1;
+	if (reg == bad - 2) return -1;
+
 	if (sec->cnt + 1 > sec->siz)
 		if (sectionrealloc(sec, sec->siz * 2) < 0)
 			return -1;
 
-	sec->instr[sec->cnt].opcode  = ADD;
+	sec->instr[sec->cnt].opcode  = opcode;
 	sec->instr[sec->cnt].operand = reg->val;
 
 	++sec->cnt;
