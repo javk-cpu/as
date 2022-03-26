@@ -19,6 +19,7 @@
 #include "parser.h"
 #include "parser_private.h"
 
+#include <ctype.h>
 #include <stddef.h>
 
 #include "hashtable.h"
@@ -35,7 +36,7 @@ static keyword_t keywords[] = {
 	{"LDL", 4, NULL},        // load low nibble
 	{"MOV", 4, NULL},        // move register
 	// TODO: branch instructions
-	{"ADD", 4, NULL},        // add
+	{"ADD", 4, parser_add},  // add
 	{"SUB", 4, NULL},        // subtract
 	{"AND", 4, NULL},        // and
 	{"ORR", 4, NULL},        // inclusive or
@@ -110,6 +111,31 @@ static int parser_nop(section_t *sec, char **tokens)
 
 	sec->instr[sec->cnt].opcode  = NOP;
 	sec->instr[sec->cnt].operand = 0;
+
+	++sec->cnt;
+
+	return 0;
+}
+
+static int parser_add(section_t *sec, char **tokens)
+{
+	char   *tmp = tokens[1];
+	size_t  i   = 0;
+
+	do {
+		tokenbuf[i] = toupper(tmp[i]);
+		++i;
+	} while (tmp[i - 1]);
+
+	register_t *reg = ht_get(registers_ht, tokenbuf, i);
+	if (!reg) return -1;
+
+	if (sec->cnt + 1 > sec->siz)
+		if (sectionrealloc(sec, sec->siz * 2) < 0)
+			return -1;
+
+	sec->instr[sec->cnt].opcode  = ADD;
+	sec->instr[sec->cnt].operand = reg->val;
 
 	++sec->cnt;
 
