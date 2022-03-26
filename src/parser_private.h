@@ -45,6 +45,7 @@ typedef struct register_s {
 
 static int parser_nop(section_t *sec, char **tokens);
 static int parser_add(section_t *sec, char **tokens);
+static int parser_sub(section_t *sec, char **tokens);
 
 static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode);
 

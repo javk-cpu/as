@@ -37,7 +37,7 @@ static keyword_t keywords[] = {
 	{"MOV", 4, NULL},        // move register
 	// TODO: branch instructions
 	{"ADD", 4, parser_add},  // add
-	{"SUB", 4, NULL},        // subtract
+	{"SUB", 4, parser_sub},  // subtract
 	{"AND", 4, NULL},        // and
 	{"ORR", 4, NULL},        // inclusive or
 	{"EOR", 4, NULL},        // exclusive or
@@ -120,6 +120,11 @@ static int parser_nop(section_t *sec, char **tokens)
 static int parser_add(section_t *sec, char **tokens)
 {
 	return parser_arithmetic(sec, tokens, ADD);
+}
+
+static int parser_sub(section_t *sec, char **tokens)
+{
+	return parser_arithmetic(sec, tokens, SUB);
 }
 
 
