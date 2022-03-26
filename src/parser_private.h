@@ -47,6 +47,7 @@ static int parser_nop(section_t *sec, char **tokens);
 static int parser_add(section_t *sec, char **tokens);
 static int parser_sub(section_t *sec, char **tokens);
 static int parser_and(section_t *sec, char **tokens);
+static int parser_orr(section_t *sec, char **tokens);
 
 static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode);
 
