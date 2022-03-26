@@ -40,7 +40,7 @@ static keyword_t keywords[] = {
 	{"SUB", 4, parser_sub},  // subtract
 	{"AND", 4, parser_and},  // and
 	{"ORR", 4, parser_orr},  // inclusive or
-	{"EOR", 4, NULL},        // exclusive or
+	{"EOR", 4, parser_eor},  // exclusive or
 	{"LSL", 4, NULL},        // logical shift left
 	{"LSR", 4, NULL},        // logical shift right
 };
@@ -135,6 +135,11 @@ static int parser_and(section_t *sec, char **tokens)
 static int parser_orr(section_t *sec, char **tokens)
 {
 	return parser_arithmetic(sec, tokens, ORR);
+}
+
+static int parser_eor(section_t *sec, char **tokens)
+{
+	return parser_arithmetic(sec, tokens, EOR);
 }
 
 
