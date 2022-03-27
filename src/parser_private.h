@@ -51,6 +51,7 @@ static int parser_orr(section_t *sec, char **tokens);
 static int parser_eor(section_t *sec, char **tokens);
 
 static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode);
+static int parser_shift(section_t *sec, char **tokens, unsigned opcode);
 
 
 #endif /* JAVK_AS_PARSER_PRIVATE */

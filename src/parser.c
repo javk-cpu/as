@@ -21,6 +21,7 @@
 
 #include <ctype.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 #include "hashtable.h"
 
@@ -167,6 +168,22 @@ static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode)
 
 	sec->instr[sec->cnt].opcode  = opcode;
 	sec->instr[sec->cnt].operand = reg->val;
+
+	++sec->cnt;
+
+	return 0;
+}
+
+static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
+{
+	unsigned long shamt = strtoul(tokens[1], NULL, 0);
+
+	if (sec->cnt + 1 > sec->siz)
+		if (sectionrealloc(sec, sec->siz * 2) < 0)
+			return -1;
+
+	sec->instr[sec->cnt].opcode  = opcode;
+	sec->instr[sec->cnt].operand = shamt;
 
 	++sec->cnt;
 
