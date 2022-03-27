@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "hashtable.h"
+#include "section.h"
 
 
 static ht_t *keywords_ht;
