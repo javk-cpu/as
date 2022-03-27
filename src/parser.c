@@ -43,7 +43,7 @@ static keyword_t keywords[] = {
 	{"ORR", 4, parser_orr},  // inclusive or
 	{"EOR", 4, parser_eor},  // exclusive or
 	{"LSL", 4, parser_lsl},  // logical shift left
-	{"LSR", 4, NULL},        // logical shift right
+	{"LSR", 4, parser_lsr},  // logical shift right
 };
 
 static register_t registers[] = {
@@ -146,6 +146,11 @@ static int parser_eor(section_t *sec, char **tokens)
 static int parser_lsl(section_t *sec, char **tokens)
 {
 	return parser_shift(sec, tokens, LSL);
+}
+
+static int parser_lsr(section_t *sec, char **tokens)
+{
+	return parser_shift(sec, tokens, LSR);
 }
 
 
