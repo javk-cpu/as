@@ -17,3 +17,15 @@
  */
 
 #include "dll.h"
+
+#include <stddef.h>
+#include <stdlib.h>
+
+
+dll_t *dllalloc(void)
+{
+	dll_t *tmp = calloc(1, sizeof(dll_t));
+	if (!tmp) return NULL;
+
+	return tmp;
+}

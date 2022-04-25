@@ -36,4 +36,7 @@ typedef struct dll_s {
 } dll_t;
 
 
+dll_t *dllalloc(void);
+
+
 #endif /* JAVK_AS_DLL */
