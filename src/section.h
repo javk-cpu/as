@@ -43,6 +43,7 @@ enum registers {
 	A,   // accumulator
 	B,   // b register
 	C,   // c register
+	ZR,  // zero register
 	// TODO: finalize registers
 	SP,  // stack pointer
 	PC,  // program counter

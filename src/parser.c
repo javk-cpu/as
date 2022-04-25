@@ -53,6 +53,7 @@ static register_t registers[] = {
 	{"A",  2, A},   // accumulator
 	{"B",  2, B},   // b register
 	{"C",  2, C},   // c register
+	{"ZR", 3, ZR},  // zero register
 	// TODO: finalize registers
 	{"SP", 3, SP},  // stack pointer
 	{"PC", 3, PC},  // program counter
@@ -195,8 +196,5 @@ static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
 
 static int parser_nop(section_t *sec, char **tokens)
 {
-	(void) sec;
-	(void) tokens;
-
-	return 0;
+	return parser_arithmetic(sec, tokens, ZR);
 }
