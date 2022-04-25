@@ -22,6 +22,24 @@
 #include <stdlib.h>
 
 
+size_t dll_append(dll_t *dll, void *data)
+{
+	dll_node_t *tmp = calloc(1, sizeof(dll_node_t));
+	if (!tmp) return 0;
+
+	tmp->data = data;
+
+	if (dll->tail) {
+		dll->tail->next = tmp;
+		tmp->prev = dll->tail;
+		dll->tail = tmp;
+	} else {
+		dll->tail = dll->head = tmp;
+	}
+
+	return ++dll->size;
+}
+
 size_t dll_prepend(dll_t *dll, void *data)
 {
 	dll_node_t *tmp = calloc(1, sizeof(dll_node_t));

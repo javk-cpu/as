@@ -36,6 +36,7 @@ typedef struct dll_s {
 } dll_t;
 
 
+size_t  dll_append(dll_t *dll, void *data);
 size_t  dll_prepend(dll_t *dll, void *data);
 dll_t  *dllalloc(void);
 void    dllfree(dll_t *dll, void (*free_data)(void *ptr));
