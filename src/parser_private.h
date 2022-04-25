@@ -55,6 +55,7 @@ static int parser_lsr(section_t *sec, char **tokens);
 static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode);
 static int parser_shift(section_t *sec, char **tokens, unsigned opcode);
 
+static int parser_lda(section_t *sec, char **tokens);
 static int parser_nop(section_t *sec, char **tokens);
 
 

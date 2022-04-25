@@ -46,6 +46,7 @@ static keyword_t keywords[] = {
 	{"MOV", 4, NULL},        // move register
 
 	/* mnemonics */
+	{"LDA", 4, parser_lda},  // load accumulator
 	{"NOP", 4, parser_nop},  // no operation
 };
 
@@ -193,6 +194,30 @@ static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
 	return 0;
 }
 
+
+static int parser_lda(section_t *sec, char **tokens)
+{
+	int    ret;
+	char **zr_clr_tokens[2];
+
+	register_t *zr = ht_get(registers_ht, "ZR", 3);
+	if (!zr) return -1;
+
+	// we want to clear the accumulator with a zero
+	zr_clr_tokens[0] = tokens[0];
+	zr_clr_tokens[0] = zr->key;
+	ret = parser_and(sec, zr_clr_tokens);
+	if (ret < 0) return -1;
+
+	ret = parser_orr(sec, tokens);
+	if (ret < 0) goto error;
+
+	return ret;
+
+error:
+	--sec->cnt;
+	return -1;
+}
 
 static int parser_nop(section_t *sec, char **tokens)
 {
