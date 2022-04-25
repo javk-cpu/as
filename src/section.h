@@ -35,8 +35,7 @@ enum opcodes {
 	LSR,  // logical shift right
 	// TODO: branch instructions
 	LDR,  // load register
-	LDH,  // load high nibble
-	LDL,  // load low nibble
+	LDN,  // load nibble
 	MOV,  // move register
 };
 

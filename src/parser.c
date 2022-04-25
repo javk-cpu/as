@@ -42,8 +42,7 @@ static keyword_t keywords[] = {
 	{"LSR", 4, parser_lsr},  // logical shift right
 	// TODO: branch instructions
 	{"LDR", 4, NULL},        // load register
-	{"LDH", 4, NULL},        // load high nibble
-	{"LDL", 4, NULL},        // load low nibble
+	{"LDN", 4, NULL},        // load nibble
 	{"MOV", 4, NULL},        // move register
 
 	/* mnemonics */
