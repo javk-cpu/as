@@ -32,19 +32,22 @@ static ht_t *registers_ht;
 
 static keyword_t keywords[] = {
 	/* instructions */
-	{"NOP", 4, parser_nop},  // no operation
-	{"LDR", 4, NULL},        // load register
-	{"LDH", 4, NULL},        // load high nibble
-	{"LDL", 4, NULL},        // load low nibble
-	{"MOV", 4, NULL},        // move register
-	// TODO: branch instructions
 	{"ADD", 4, parser_add},  // add
 	{"SUB", 4, parser_sub},  // subtract
+	{"NEG", 4, parser_neg},  // negate
 	{"AND", 4, parser_and},  // and
 	{"ORR", 4, parser_orr},  // inclusive or
 	{"EOR", 4, parser_eor},  // exclusive or
 	{"LSL", 4, parser_lsl},  // logical shift left
 	{"LSR", 4, parser_lsr},  // logical shift right
+	// TODO: branch instructions
+	{"LDR", 4, NULL},        // load register
+	{"LDH", 4, NULL},        // load high nibble
+	{"LDL", 4, NULL},        // load low nibble
+	{"MOV", 4, NULL},        // move register
+
+	/* mnemonics */
+	{"NOP", 4, parser_nop},  // no operation
 };
 
 static register_t registers[] = {
@@ -103,22 +106,6 @@ void parser_rm(void)
 }
 
 
-static int parser_nop(section_t *sec, char **tokens)
-{
-	(void) tokens;
-
-	if (sec->cnt + 1 > sec->siz)
-		if (sectionrealloc(sec, sec->siz * 2) < 0)
-			return -1;
-
-	sec->instr[sec->cnt].opcode  = NOP;
-	sec->instr[sec->cnt].operand = 0;
-
-	++sec->cnt;
-
-	return 0;
-}
-
 static int parser_add(section_t *sec, char **tokens)
 {
 	return parser_arithmetic(sec, tokens, ADD);
@@ -127,6 +114,11 @@ static int parser_add(section_t *sec, char **tokens)
 static int parser_sub(section_t *sec, char **tokens)
 {
 	return parser_arithmetic(sec, tokens, SUB);
+}
+
+static int parser_neg(section_t *sec, char **tokens)
+{
+	return parser_arithmetic(sec, tokens, NEG);
 }
 
 static int parser_and(section_t *sec, char **tokens)
@@ -197,6 +189,15 @@ static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
 	sec->instr[sec->cnt].operand = shamt;
 
 	++sec->cnt;
+
+	return 0;
+}
+
+
+static int parser_nop(section_t *sec, char **tokens)
+{
+	(void) sec;
+	(void) tokens;
 
 	return 0;
 }

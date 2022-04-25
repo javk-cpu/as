@@ -25,19 +25,19 @@
 
 
 enum opcodes {
-	NOP,  // no operation
-	LDR,  // load register
-	LDH,  // load high nibble
-	LDL,  // load low nibble
-	MOV,  // move register
-	// TODO: branch instructions
 	ADD,  // add
 	SUB,  // subtract
+	NEG,  // negate
 	AND,  // and
 	ORR,  // inclusive or
 	EOR,  // exclusive or
 	LSL,  // logical shift left
 	LSR,  // logical shift right
+	// TODO: branch instructions
+	LDR,  // load register
+	LDH,  // load high nibble
+	LDL,  // load low nibble
+	MOV,  // move register
 };
 
 enum registers {

@@ -43,9 +43,9 @@ typedef struct register_s {
 } register_t;
 
 
-static int parser_nop(section_t *sec, char **tokens);
 static int parser_add(section_t *sec, char **tokens);
 static int parser_sub(section_t *sec, char **tokens);
+static int parser_neg(section_t *sec, char **tokens);
 static int parser_and(section_t *sec, char **tokens);
 static int parser_orr(section_t *sec, char **tokens);
 static int parser_eor(section_t *sec, char **tokens);
@@ -54,6 +54,8 @@ static int parser_lsr(section_t *sec, char **tokens);
 
 static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode);
 static int parser_shift(section_t *sec, char **tokens, unsigned opcode);
+
+static int parser_nop(section_t *sec, char **tokens);
 
 
 #endif /* JAVK_AS_PARSER_PRIVATE */
