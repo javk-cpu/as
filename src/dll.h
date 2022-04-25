@@ -20,4 +20,11 @@
 #define JAVK_AS_DLL
 
 
+typedef struct dll_node_s {
+	struct dll_node_s *prev;
+	struct dll_node_s *next;
+	void              *data;
+} dll_node_t;
+
+
 #endif /* JAVK_AS_DLL */
