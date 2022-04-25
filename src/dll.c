@@ -29,3 +29,29 @@ dll_t *dllalloc(void)
 
 	return tmp;
 }
+
+void dllfree(dll_t *dll, void (*free_data)(void *ptr))
+{
+	if (!dll) return;
+
+	dll_node_t *tmp;
+	dll_node_t *head = dll->head;
+	if (free_data) {
+		while (head) {
+			tmp  = head;
+			head = head->next;
+
+			if (tmp->data) free_data(tmp->data);
+			free(tmp);
+		}
+	} else {
+		while (head) {
+			tmp  = head;
+			head = head->next;
+
+			free(tmp);
+		}
+	}
+
+	free(dll);
+}

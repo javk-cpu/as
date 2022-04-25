@@ -37,6 +37,7 @@ typedef struct dll_s {
 
 
 dll_t *dllalloc(void);
+void   dllfree(dll_t *dll, void (*free_data)(void *ptr));
 
 
 #endif /* JAVK_AS_DLL */
