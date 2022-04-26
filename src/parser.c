@@ -197,15 +197,11 @@ static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
 
 static int parser_lda(section_t *sec, char **tokens)
 {
-	int   ret;
 	char *zr_clr_tokens[2];
 
-	register_t *zr = ht_get(registers_ht, "ZR", 3);
-	if (!zr) return -1;
-
-	// we want to clear the accumulator with a zero
+	// clear the accumulator first
 	zr_clr_tokens[0] = tokens[0];
-	zr_clr_tokens[0] = zr->key;
+	zr_clr_tokens[0] = "ZR";
 	ret = parser_and(sec, zr_clr_tokens);
 	if (ret < 0) return -1;
 
