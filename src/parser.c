@@ -221,5 +221,11 @@ error:
 
 static int parser_nop(section_t *sec, char **tokens)
 {
-	return parser_arithmetic(sec, tokens, ZR);
+	char *zr_orr_tokens[2];
+
+	zr_orr_tokens[0] = tokens[0];
+	zr_orr_tokens[1] = "ZR";
+
+	// do nothing by preserving the accumulator
+	return parser_orr(sec, zr_orr_tokens);
 }
