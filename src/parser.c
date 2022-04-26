@@ -197,8 +197,8 @@ static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
 
 static int parser_lda(section_t *sec, char **tokens)
 {
-	int    ret;
-	char **zr_clr_tokens[2];
+	int   ret;
+	char *zr_clr_tokens[2];
 
 	register_t *zr = ht_get(registers_ht, "ZR", 3);
 	if (!zr) return -1;
