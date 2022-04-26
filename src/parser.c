@@ -208,7 +208,7 @@ static int parser_lda(section_t *sec, char **tokens)
 	ret = parser_orr(sec, tokens);
 	if (ret < 0) goto error;
 
-	return ret;
+	return 0;
 
 error:
 	--sec->cnt;
