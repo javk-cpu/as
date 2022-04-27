@@ -197,6 +197,7 @@ static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
 
 static int parser_lda(section_t *sec, char **tokens)
 {
+	int   ret;
 	char *zr_clr_tokens[2];
 
 	// clear the accumulator first
