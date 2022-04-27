@@ -107,6 +107,19 @@ void parser_rm(void)
 }
 
 
+static void labelfree(void *label)
+{
+	label_t *tmp = label;
+
+	if (!tmp) return;
+
+	if (tmp->key) free(tmp->key);
+	if (tmp->sec) sectionfree(tmp->sec);
+
+	free(label);
+}
+
+
 static int parser_add(section_t *sec, char **tokens)
 {
 	return parser_arithmetic(sec, tokens, ADD);

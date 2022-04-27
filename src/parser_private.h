@@ -48,6 +48,8 @@ typedef struct label_s {
 } label_t;
 
 
+static void labelfree(void *label);
+
 static int parser_add(section_t *sec, char **tokens);
 static int parser_sub(section_t *sec, char **tokens);
 static int parser_neg(section_t *sec, char **tokens);
