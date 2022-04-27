@@ -27,6 +27,7 @@
 #include "section.h"
 
 
+#define SECSIZ   64
 #define TOKENSIZ 4
 
 
@@ -48,7 +49,8 @@ typedef struct label_s {
 } label_t;
 
 
-static void labelfree(void *label);
+static label_t *labelalloc(const char *key);
+static void     labelfree(void *label);
 
 static int parser_add(section_t *sec, char **tokens);
 static int parser_sub(section_t *sec, char **tokens);

@@ -22,6 +22,7 @@
 #include <ctype.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "hashtable.h"
 #include "section.h"
@@ -106,6 +107,27 @@ void parser_rm(void)
 	htfree(registers_ht, NULL);
 }
 
+
+static label_t *labelalloc(const char *key)
+{
+	label_t *tmp = calloc(1, sizeof(label_t));
+	if (!tmp) return NULL;
+
+	size_t keysiz = strlen(key) + 1;
+
+	tmp->key = malloc(keysiz);
+	if (!tmp->key) goto error;
+	strncpy(tmp->key, key, keysiz);
+
+	tmp->sec = sectionalloc(SECSIZ);
+	if (!tmp->sec) goto error;
+
+	return tmp;
+
+error:
+	labelfree(tmp);
+	return NULL;
+}
 
 static void labelfree(void *label)
 {
