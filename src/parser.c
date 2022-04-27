@@ -24,11 +24,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "dll.h"
 #include "hashtable.h"
 #include "section.h"
 
 
+static dll_t *labels_dll;
+
 static ht_t *keywords_ht;
+static ht_t *labels_ht;
 static ht_t *registers_ht;
 
 static keyword_t keywords[] = {
@@ -66,8 +70,13 @@ static char tokenbuf[TOKENSIZ];
 
 int parser_init(void)
 {
+	labels_dll = dllalloc();
+	if (!labels_dll) return -1;
+
 	keywords_ht = htalloc();
-	if (!keywords_ht) return -1;
+	if (!keywords_ht) goto error;
+	labels_ht = htalloc();
+	if (!labels_ht) goto error;
 	registers_ht = htalloc();
 	if (!registers_ht) goto error;
 
@@ -96,14 +105,21 @@ int parser_init(void)
 	return 0;
 
 error:
+	dllfree(labels_dll, NULL);
+
 	htfree(keywords_ht,  NULL);
+	htfree(labels_ht,    NULL);
 	htfree(registers_ht, NULL);
+
 	return -1;
 }
 
 void parser_rm(void)
 {
+	dllfree(labels_dll, labelfree);
+
 	htfree(keywords_ht,  NULL);
+	htfree(labels_ht,    NULL);
 	htfree(registers_ht, NULL);
 }
 
