@@ -45,6 +45,7 @@ typedef struct register_s {
 
 typedef struct label_s {
 	char      *key;
+	size_t     len;
 	section_t *sec;
 } label_t;
 
