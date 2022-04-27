@@ -34,7 +34,7 @@
 typedef struct keyword_s {
 	char  *key;
 	size_t len;
-	int   (*parser)(section_t *sec, char **tokens);
+	int   (*parser)(section_t *sec, const char **tokens);
 } keyword_t;
 
 typedef struct register_s {
@@ -53,20 +53,20 @@ typedef struct label_s {
 static label_t *labelalloc(const char *key);
 static void     labelfree(void *label);
 
-static int parser_add(section_t *sec, char **tokens);
-static int parser_sub(section_t *sec, char **tokens);
-static int parser_neg(section_t *sec, char **tokens);
-static int parser_and(section_t *sec, char **tokens);
-static int parser_orr(section_t *sec, char **tokens);
-static int parser_eor(section_t *sec, char **tokens);
-static int parser_lsl(section_t *sec, char **tokens);
-static int parser_lsr(section_t *sec, char **tokens);
+static int parser_add(section_t *sec, const char **tokens);
+static int parser_sub(section_t *sec, const char **tokens);
+static int parser_neg(section_t *sec, const char **tokens);
+static int parser_and(section_t *sec, const char **tokens);
+static int parser_orr(section_t *sec, const char **tokens);
+static int parser_eor(section_t *sec, const char **tokens);
+static int parser_lsl(section_t *sec, const char **tokens);
+static int parser_lsr(section_t *sec, const char **tokens);
 
-static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode);
-static int parser_shift(section_t *sec, char **tokens, unsigned opcode);
+static int parser_arithmetic(section_t *sec, const char **tokens, unsigned opcode);
+static int parser_shift(section_t *sec, const char **tokens, unsigned opcode);
 
-static int parser_lda(section_t *sec, char **tokens);
-static int parser_nop(section_t *sec, char **tokens);
+static int parser_lda(section_t *sec, const char **tokens);
+static int parser_nop(section_t *sec, const char **tokens);
 
 
 #endif /* JAVK_AS_PARSER_PRIVATE */

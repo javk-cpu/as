@@ -158,51 +158,51 @@ static void labelfree(void *label)
 }
 
 
-static int parser_add(section_t *sec, char **tokens)
+static int parser_add(section_t *sec, const char **tokens)
 {
 	return parser_arithmetic(sec, tokens, ADD);
 }
 
-static int parser_sub(section_t *sec, char **tokens)
+static int parser_sub(section_t *sec, const char **tokens)
 {
 	return parser_arithmetic(sec, tokens, SUB);
 }
 
-static int parser_neg(section_t *sec, char **tokens)
+static int parser_neg(section_t *sec, const char **tokens)
 {
 	return parser_arithmetic(sec, tokens, NEG);
 }
 
-static int parser_and(section_t *sec, char **tokens)
+static int parser_and(section_t *sec, const char **tokens)
 {
 	return parser_arithmetic(sec, tokens, AND);
 }
 
-static int parser_orr(section_t *sec, char **tokens)
+static int parser_orr(section_t *sec, const char **tokens)
 {
 	return parser_arithmetic(sec, tokens, ORR);
 }
 
-static int parser_eor(section_t *sec, char **tokens)
+static int parser_eor(section_t *sec, const char **tokens)
 {
 	return parser_arithmetic(sec, tokens, EOR);
 }
 
-static int parser_lsl(section_t *sec, char **tokens)
+static int parser_lsl(section_t *sec, const char **tokens)
 {
 	return parser_shift(sec, tokens, LSL);
 }
 
-static int parser_lsr(section_t *sec, char **tokens)
+static int parser_lsr(section_t *sec, const char **tokens)
 {
 	return parser_shift(sec, tokens, LSR);
 }
 
 
-static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode)
+static int parser_arithmetic(section_t *sec, const char **tokens, unsigned opcode)
 {
-	char   *tmp = tokens[1];
-	size_t  i   = 0;
+	const char *tmp = tokens[1];
+	size_t      i   = 0;
 
 	do {
 		tokenbuf[i] = toupper(tmp[i]);
@@ -229,7 +229,7 @@ static int parser_arithmetic(section_t *sec, char **tokens, unsigned opcode)
 	return 0;
 }
 
-static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
+static int parser_shift(section_t *sec, const char **tokens, unsigned opcode)
 {
 	unsigned long shamt = strtoul(tokens[1], NULL, 0);
 
@@ -246,10 +246,10 @@ static int parser_shift(section_t *sec, char **tokens, unsigned opcode)
 }
 
 
-static int parser_lda(section_t *sec, char **tokens)
+static int parser_lda(section_t *sec, const char **tokens)
 {
-	int   ret;
-	char *zr_clr_tokens[2];
+	int         ret;
+	const char *zr_clr_tokens[2];
 
 	// clear the accumulator first
 	zr_clr_tokens[0] = tokens[0];
@@ -267,9 +267,9 @@ error:
 	return -1;
 }
 
-static int parser_nop(section_t *sec, char **tokens)
+static int parser_nop(section_t *sec, const char **tokens)
 {
-	char *zr_orr_tokens[2];
+	const char *zr_orr_tokens[2];
 
 	zr_orr_tokens[0] = tokens[0];
 	zr_orr_tokens[1] = "ZR";
