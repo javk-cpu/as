@@ -18,8 +18,26 @@
 
 #include <stdlib.h>
 
+#include "parser.h"
+
+
+static void cleanexit(void)
+{
+	parser_rm();
+}
 
 int main(void)
 {
+	static int ret;
+
+	ret = atexit(cleanexit);
+	if (ret < 0) goto error;
+
+	ret = parser_init();
+	if (ret < 0) goto error;
+
 	return EXIT_SUCCESS;
+
+error:
+	return EXIT_FAILURE;
 }
