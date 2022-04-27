@@ -42,6 +42,11 @@ typedef struct register_s {
 	unsigned  val;
 } register_t;
 
+typedef struct label_s {
+	char      *key;
+	section_t *sec;
+} label_t;
+
 
 static int parser_add(section_t *sec, char **tokens);
 static int parser_sub(section_t *sec, char **tokens);
