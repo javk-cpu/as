@@ -68,6 +68,58 @@ static register_t registers[] = {
 static char tokenbuf[TOKENSIZ];
 
 
+int parse_section(const char *name, const char ***keys)
+{
+	int ret;
+
+	if (!keys) return -1;
+
+	label_t *label = labelalloc(name);
+	if (!label) return -1;
+
+	ret = dll_append(labels_dll, label);
+	if (ret < 0) goto dll_append_error;
+
+	ret = ht_set(labels_ht, label->key, label->len, label);
+	if (ret < 0) goto error;
+
+	keyword_t  *keyword;
+	const char *key;
+	size_t      len;
+	while (*keys) {
+		key = **keys;
+
+		len = strlen(key) + 1;
+		if (len > TOKENSIZ) goto error;
+
+		int i = 0;
+		do {
+			tokenbuf[i] = toupper(key[i]);
+			++i;
+		} while (key[i - 1]);
+		key = tokenbuf;
+
+		keyword = ht_get(keywords_ht, key, len);
+		if (!keyword) goto error;
+
+		ret = keyword->parser(label->sec, *keys);
+		if (ret < 0) goto error;
+
+		++keys;
+	}
+
+	return 0;
+
+dll_append_error:
+	// NOTE: if label was successfully added to labels_dll,
+	// we risk a double free condition, parser_rm() will
+	// cleanup after us if we fail after dll_append()
+	labelfree(label);
+
+error:
+	return -1;
+}
+
 int parser_init(void)
 {
 	labels_dll = dllalloc();

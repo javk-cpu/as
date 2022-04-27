@@ -20,6 +20,7 @@
 #define JAVK_AS_PARSER
 
 
+int  parse_section(const char *name, const char ***keys);
 int  parser_init(void);
 void parser_rm(void);
 
