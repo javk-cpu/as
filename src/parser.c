@@ -129,11 +129,11 @@ static label_t *labelalloc(const char *key)
 	label_t *tmp = calloc(1, sizeof(label_t));
 	if (!tmp) return NULL;
 
-	size_t keysiz = strlen(key) + 1;
+	tmp->len = strlen(key) + 1;
 
-	tmp->key = malloc(keysiz);
+	tmp->key = malloc(tmp->len);
 	if (!tmp->key) goto error;
-	strncpy(tmp->key, key, keysiz);
+	strncpy(tmp->key, key, tmp->len);
 
 	tmp->sec = sectionalloc(SECSIZ);
 	if (!tmp->sec) goto error;
