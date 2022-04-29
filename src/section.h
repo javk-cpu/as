@@ -33,10 +33,14 @@ enum opcodes {
 	EOR,  // exclusive or
 	LSL,  // logical shift left
 	LSR,  // logical shift right
-	// TODO: branch instructions
-	LDR,  // load register
-	LDN,  // load nibble
-	MOV,  // move register
+	MVA,  // move 'a' register
+	MVB,  // move 16-bit register
+	LNL,  // load nibble low
+	LNH,  // load nibble high
+	LDB,  // load byte
+	STB,  // store byte
+	JPC,  // jump (conditional)
+	JPU,  // jump (unconditional)
 };
 
 enum registers_8bit {

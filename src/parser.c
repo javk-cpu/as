@@ -36,7 +36,7 @@ static ht_t *labels_ht;
 static ht_t *registers_ht;
 
 static keyword_t keywords[] = {
-	/* instructions */
+	/* opcodes */
 	{"ADD", 4, parser_add},  // add
 	{"SUB", 4, parser_sub},  // subtract
 	{"NEG", 4, parser_neg},  // negate
@@ -45,10 +45,14 @@ static keyword_t keywords[] = {
 	{"EOR", 4, parser_eor},  // exclusive or
 	{"LSL", 4, parser_lsl},  // logical shift left
 	{"LSR", 4, parser_lsr},  // logical shift right
-	// TODO: branch instructions
-	{"LDR", 4, NULL},        // load register
-	{"LDN", 4, NULL},        // load nibble
-	{"MOV", 4, NULL},        // move register
+	{"MVA", 4, NULL},        // move 'a' register
+	{"MVB", 4, NULL},        // move 16-bit register
+	{"LNL", 4, NULL},        // load nibble low
+	{"LNH", 4, NULL},        // load nibble high
+	{"LDB", 4, NULL},        // load byte
+	{"STB", 4, NULL},        // store byte
+	{"JPC", 4, NULL},        // jump (conditional)
+	{"JPU", 4, NULL},        // jump (unconditional)
 
 	/* mnemonics */
 	{"LDA", 4, parser_lda},  // load accumulator
