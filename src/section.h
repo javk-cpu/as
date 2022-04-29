@@ -39,14 +39,30 @@ enum opcodes {
 	MOV,  // move register
 };
 
-enum registers {
+enum registers_8bit {
 	A,   // accumulator
 	B,   // b register
 	C,   // c register
-	ZR,  // zero register
-	// TODO: finalize registers
-	SP,  // stack pointer
+	D,   // d register
+	E,   // e register
+	F,   // f register
+	G,   // g register
+	H,   // h register
+	I,   // i register
+	J,   // j register
+	K,   // k register
+	L,   // l register
+	M,   // m register
+	N,   // n register
+	O,   // o register
+	Z,   // zero register
+};
+
+enum registers_16bit {
 	PC,  // program counter
+	SP,  // stack pointer
+	IJ,  // intended jump
+	KL,  // kl register
 };
 
 typedef struct instruction_s {

@@ -56,13 +56,27 @@ static keyword_t keywords[] = {
 };
 
 static register_t registers[] = {
-	{"A",  2, A},   // accumulator
-	{"B",  2, B},   // b register
-	{"C",  2, C},   // c register
-	{"ZR", 3, ZR},  // zero register
-	// TODO: finalize registers
-	{"SP", 3, SP},  // stack pointer
+	{"A", 2, A},  // accumulator
+	{"B", 2, B},  // b register
+	{"C", 2, C},  // c register
+	{"D", 2, D},  // d register
+	{"E", 2, E},  // e register
+	{"F", 2, F},  // f register
+	{"G", 2, G},  // g register
+	{"H", 2, H},  // h register
+	{"I", 2, I},  // i register
+	{"J", 2, J},  // j register
+	{"K", 2, K},  // k register
+	{"L", 2, L},  // l register
+	{"M", 2, M},  // m register
+	{"N", 2, N},  // n register
+	{"O", 2, O},  // o register
+	{"Z", 2, Z},  // zero register
+
 	{"PC", 3, PC},  // program counter
+	{"SP", 3, SP},  // stack pointer
+	{"IJ", 3, IJ},  // intended jump
+	{"KL", 3, KL},  // kl register
 };
 
 static char tokenbuf[TOKENSIZ];
@@ -305,7 +319,7 @@ static int parser_lda(section_t *sec, const char **tokens)
 
 	// clear the accumulator first
 	zr_clr_tokens[0] = tokens[0];
-	zr_clr_tokens[0] = "ZR";
+	zr_clr_tokens[0] = "Z";
 	ret = parser_and(sec, zr_clr_tokens);
 	if (ret < 0) return -1;
 
@@ -324,7 +338,7 @@ static int parser_nop(section_t *sec, const char **tokens)
 	const char *zr_orr_tokens[2];
 
 	zr_orr_tokens[0] = tokens[0];
-	zr_orr_tokens[1] = "ZR";
+	zr_orr_tokens[1] = "Z";
 
 	// do nothing by preserving the accumulator
 	return parser_orr(sec, zr_orr_tokens);
