@@ -1,6 +1,7 @@
 /*
  * parser.c -- token parsing
  * Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
+ * Copyright (C) 2022  Ani Vardanyan <ani.var.2003@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,8 +52,8 @@ static keyword_t keywords[] = {
 	{"LNH", 4, NULL},        // load nibble high
 	{"LDB", 4, NULL},        // load byte
 	{"STB", 4, NULL},        // store byte
-	{"JPC", 4, NULL},        // jump (conditional)
-	{"JPU", 4, NULL},        // jump (unconditional)
+	{"JMP", 4, NULL},        // jump
+	{"JPL", 4, NULL},        // jump (with link)
 
 	/* mnemonics */
 	{"LDA", 4, parser_lda},  // load accumulator

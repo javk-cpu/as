@@ -1,6 +1,7 @@
 /*
  * section.h -- section generation
  * Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
+ * Copyright (C) 2022  Ani Vardanyan <ani.var.2003@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,8 +40,8 @@ enum opcodes {
 	LNH,  // load nibble high
 	LDB,  // load byte
 	STB,  // store byte
-	JPC,  // jump (conditional)
-	JPU,  // jump (unconditional)
+	JMP,  // jump
+	JPL,  // jump (with link)
 };
 
 enum registers_8bit {
