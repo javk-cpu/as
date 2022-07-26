@@ -17,8 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "parser.h"
-#include "parser_private.h"
+#include "asm/parser.h"
+#include "asm/parser_private.h"
 
 #include <ctype.h>
 #include <stddef.h>

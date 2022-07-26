@@ -18,7 +18,7 @@
 
 #include <stdlib.h>
 
-#include "parser.h"
+#include "asm/parser.h"
 
 
 static void cleanexit(void)

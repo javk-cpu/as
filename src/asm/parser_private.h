@@ -16,11 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef JAVK_AS_PARSER_PRIVATE
-#define JAVK_AS_PARSER_PRIVATE
+#ifndef JAVK_AS_ASM_PARSER_PRIVATE
+#define JAVK_AS_ASM_PARSER_PRIVATE
 
 
-#include "parser.h"
+#include "asm/parser.h"
 
 #include <stddef.h>
 
@@ -69,4 +69,4 @@ static int parser_lda(section_t *sec, const char **tokens);
 static int parser_nop(section_t *sec, const char **tokens);
 
 
-#endif /* JAVK_AS_PARSER_PRIVATE */
+#endif /* JAVK_AS_ASM_PARSER_PRIVATE */

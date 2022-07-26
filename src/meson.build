@@ -14,11 +14,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 as_sources = files(
+        'asm/parser.c',
         'asm/section.c',
         'dll.c',
         'ht.c',
         'main.c',
-        'parser.c',
 )
 
 

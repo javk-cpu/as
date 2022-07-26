@@ -16,12 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef JAVK_AS_PARSER
-#define JAVK_AS_PARSER
+#ifndef JAVK_AS_ASM_PARSER
+#define JAVK_AS_ASM_PARSER
 
 
 int  parse_section(const char *name, const char ***keys);
 int  parser_init(void);
 void parser_rm(void);
 
-#endif /* JAVK_AS_PARSER */
+
+#endif /* JAVK_AS_ASM_PARSER */
