@@ -1,5 +1,5 @@
 /*
- * hashtable_private.h -- hash table implementation
+ * ht.h -- hash table implementation
  * Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,24 +16,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef JAVK_AS_HASHTABLE_PRIVATE
-#define JAVK_AS_HASHTABLE_PRIVATE
+#ifndef JAVK_AS_HT
+#define JAVK_AS_HT
 
 
-#include "hashtable.h"
-
-#include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
 
 
-#define FNV_OFFSET_BASIS 0xcbf29ce484222325UL
-#define FNV_PRIME        0x100000001b3UL
+#define HT_DEFAULT_CAP 512
 
 
-static uint64_t fnv1a_hash(const void *key, size_t len);
-static int      ht_set_private(ht_t *ht, void *key, size_t len, void *val, bool cpy);
-static int      rehash(ht_t *ht);
+typedef struct ht_ent_s {
+	void   *key;
+	size_t  key_len;
+	void   *val;
+} ht_ent_t;
+
+typedef struct ht_s {
+	ht_ent_t *ent;
+	size_t    cap;
+	size_t    cnt;
+} ht_t;
 
 
-#endif /* JAVK_AS_HASHTABLE_PRIVATE */
+ht_t *ht_alloc(void);
+void  ht_free(ht_t *ht, void (*free_val)(void *ptr));
+void *ht_get(const ht_t *ht, const void *key, size_t len);
+int   ht_set(ht_t *ht, const void *key, size_t len, void *val);
+
+
+#endif /* JAVK_AS_HT */

@@ -15,7 +15,7 @@
 
 as_sources = files(
         'dll.c',
-        'hashtable.c',
+        'ht.c',
         'main.c',
         'section.c',
 )

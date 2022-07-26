@@ -1,5 +1,5 @@
 /*
- * hashtable.c -- hash table implementation
+ * ht.c -- hash table implementation
  * Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "hashtable.h"
-#include "hashtable_private.h"
+#include "ht.h"
+#include "ht_private.h"
 
 #include <stdbool.h>
 #include <stddef.h>
