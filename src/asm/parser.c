@@ -93,7 +93,7 @@ int parse_section(const char *name, const char ***keys)
 
 	if (!keys) return -1;
 
-	label_t *label = labelalloc(name);
+	label_t *label = label_alloc(name);
 	if (!label) return -1;
 
 	ret = dll_append(labels_dll, label);
@@ -133,7 +133,7 @@ dll_append_error:
 	// NOTE: if label was successfully added to labels_dll,
 	// we risk a double free condition, parser_rm() will
 	// cleanup after us if we fail after dll_append()
-	labelfree(label);
+	label_free(label);
 
 error:
 	return -1;
@@ -187,7 +187,7 @@ error:
 
 void parser_rm(void)
 {
-	dll_free(labels_dll, labelfree);
+	dll_free(labels_dll, label_free);
 
 	ht_free(keywords_ht,  NULL);
 	ht_free(labels_ht,    NULL);
@@ -195,7 +195,7 @@ void parser_rm(void)
 }
 
 
-static label_t *labelalloc(const char *key)
+static label_t *label_alloc(const char *key)
 {
 	label_t *tmp = calloc(1, sizeof(label_t));
 	if (!tmp) return NULL;
@@ -212,11 +212,11 @@ static label_t *labelalloc(const char *key)
 	return tmp;
 
 error:
-	labelfree(tmp);
+	label_free(tmp);
 	return NULL;
 }
 
-static void labelfree(void *label)
+static void label_free(void *label)
 {
 	label_t *tmp = label;
 

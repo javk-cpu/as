@@ -50,8 +50,8 @@ typedef struct label_s {
 } label_t;
 
 
-static label_t *labelalloc(const char *key);
-static void     labelfree(void *label);
+static label_t *label_alloc(const char *key);
+static void     label_free(void *label);
 
 static int parser_add(section_t *sec, const char **tokens);
 static int parser_sub(section_t *sec, const char **tokens);
