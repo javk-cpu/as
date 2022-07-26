@@ -22,6 +22,14 @@
 #include <stdlib.h>
 
 
+dll_t *dll_alloc(void)
+{
+	dll_t *tmp = calloc(1, sizeof(dll_t));
+	if (!tmp) return NULL;
+
+	return tmp;
+}
+
 size_t dll_append(dll_t *dll, void *data)
 {
 	dll_node_t *tmp = calloc(1, sizeof(dll_node_t));
@@ -40,33 +48,7 @@ size_t dll_append(dll_t *dll, void *data)
 	return ++dll->size;
 }
 
-size_t dll_prepend(dll_t *dll, void *data)
-{
-	dll_node_t *tmp = calloc(1, sizeof(dll_node_t));
-	if (!tmp) return 0;
-
-	tmp->data = data;
-
-	if (dll->head) {
-		dll->head->prev = tmp;
-		tmp->next = dll->head;
-		dll->head = tmp;
-	} else {
-		dll->head = dll->tail = tmp;
-	}
-
-	return ++dll->size;
-}
-
-dll_t *dllalloc(void)
-{
-	dll_t *tmp = calloc(1, sizeof(dll_t));
-	if (!tmp) return NULL;
-
-	return tmp;
-}
-
-void dllfree(dll_t *dll, void (*free_data)(void *ptr))
+void dll_free(dll_t *dll, void (*free_data)(void *ptr))
 {
 	if (!dll) return;
 
@@ -90,4 +72,22 @@ void dllfree(dll_t *dll, void (*free_data)(void *ptr))
 	}
 
 	free(dll);
+}
+
+size_t dll_prepend(dll_t *dll, void *data)
+{
+	dll_node_t *tmp = calloc(1, sizeof(dll_node_t));
+	if (!tmp) return 0;
+
+	tmp->data = data;
+
+	if (dll->head) {
+		dll->head->prev = tmp;
+		tmp->next = dll->head;
+		dll->head = tmp;
+	} else {
+		dll->head = dll->tail = tmp;
+	}
+
+	return ++dll->size;
 }

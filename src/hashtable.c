@@ -26,6 +26,50 @@
 #include <string.h>
 
 
+ht_t *ht_alloc(void)
+{
+	ht_t *tmp = malloc(sizeof(ht_t));
+	if (!tmp) return NULL;
+
+	tmp->ent = calloc(HT_DEFAULT_CAP, sizeof(ht_ent_t));
+	if (!tmp->ent) goto error;
+
+	tmp->cap = HT_DEFAULT_CAP;
+	tmp->cnt = 0;
+
+	return tmp;
+
+error:
+	free(tmp);
+	return NULL;
+}
+
+void ht_free(ht_t *ht, void (*free_val)(void *ptr))
+{
+	if (!ht) return;
+
+	ht_ent_t *ent = ht->ent;
+	if (free_val) {
+		while (ht->cap) {
+			if (ent->key) {
+				free(ent->key);
+				if (ent->val) free_val(ent->val);
+			}
+			--ht->cap;
+			++ent;
+		}
+	} else {
+		while (ht->cap) {
+			if (ent->key) free(ent->key);
+			--ht->cap;
+			++ent;
+		}
+	}
+
+	free(ht->ent);
+	free(ht);
+}
+
 void *ht_get(const ht_t *ht, const void *key, size_t len)
 {
 	if (!key || !len) return NULL;
@@ -56,50 +100,6 @@ int ht_set(ht_t *ht, const void *key, size_t len, void *val)
 	if (ht_set_private(ht, (void*) key, len, val, true)) return -1;
 
 	return 0;
-}
-
-ht_t *htalloc(void)
-{
-	ht_t *tmp = malloc(sizeof(ht_t));
-	if (!tmp) return NULL;
-
-	tmp->ent = calloc(HT_DEFAULT_CAP, sizeof(ht_ent_t));
-	if (!tmp->ent) goto error;
-
-	tmp->cap = HT_DEFAULT_CAP;
-	tmp->cnt = 0;
-
-	return tmp;
-
-error:
-	free(tmp);
-	return NULL;
-}
-
-void htfree(ht_t *ht, void (*free_val)(void *ptr))
-{
-	if (!ht) return;
-
-	ht_ent_t *ent = ht->ent;
-	if (free_val) {
-		while (ht->cap) {
-			if (ent->key) {
-				free(ent->key);
-				if (ent->val) free_val(ent->val);
-			}
-			--ht->cap;
-			++ent;
-		}
-	} else {
-		while (ht->cap) {
-			if (ent->key) free(ent->key);
-			--ht->cap;
-			++ent;
-		}
-	}
-
-	free(ht->ent);
-	free(ht);
 }
 
 
