@@ -17,8 +17,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef JAVK_AS_SECTION
-#define JAVK_AS_SECTION
+#ifndef JAVK_AS_ASM_SECTION
+#define JAVK_AS_ASM_SECTION
 
 
 #include <stddef.h>
@@ -88,4 +88,4 @@ int        section_realloc(section_t *sec, size_t siz);
 uint8_t   *section_to_bin(const section_t *sec);
 
 
-#endif /* JAVK_AS_SECTION */
+#endif /* JAVK_AS_ASM_SECTION */
