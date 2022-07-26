@@ -25,9 +25,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "asm/section.h"
 #include "dll.h"
-#include "hashtable.h"
-#include "section.h"
+#include "ht.h"
 
 
 static dll_t *labels_dll;
@@ -141,14 +141,14 @@ error:
 
 int parser_init(void)
 {
-	labels_dll = dllalloc();
+	labels_dll = dll_alloc();
 	if (!labels_dll) return -1;
 
-	keywords_ht = htalloc();
+	keywords_ht = ht_alloc();
 	if (!keywords_ht) goto error;
-	labels_ht = htalloc();
+	labels_ht = ht_alloc();
 	if (!labels_ht) goto error;
-	registers_ht = htalloc();
+	registers_ht = ht_alloc();
 	if (!registers_ht) goto error;
 
 	for (size_t i = 0; i < sizeof(keywords) / sizeof(keyword_t); i++) {
@@ -176,22 +176,22 @@ int parser_init(void)
 	return 0;
 
 error:
-	dllfree(labels_dll, NULL);
+	dll_free(labels_dll, NULL);
 
-	htfree(keywords_ht,  NULL);
-	htfree(labels_ht,    NULL);
-	htfree(registers_ht, NULL);
+	ht_free(keywords_ht,  NULL);
+	ht_free(labels_ht,    NULL);
+	ht_free(registers_ht, NULL);
 
 	return -1;
 }
 
 void parser_rm(void)
 {
-	dllfree(labels_dll, labelfree);
+	dll_free(labels_dll, labelfree);
 
-	htfree(keywords_ht,  NULL);
-	htfree(labels_ht,    NULL);
-	htfree(registers_ht, NULL);
+	ht_free(keywords_ht,  NULL);
+	ht_free(labels_ht,    NULL);
+	ht_free(registers_ht, NULL);
 }
 
 
@@ -206,7 +206,7 @@ static label_t *labelalloc(const char *key)
 	if (!tmp->key) goto error;
 	strncpy(tmp->key, key, tmp->len);
 
-	tmp->sec = sectionalloc(SECSIZ);
+	tmp->sec = section_alloc(SECSIZ);
 	if (!tmp->sec) goto error;
 
 	return tmp;
@@ -223,7 +223,7 @@ static void labelfree(void *label)
 	if (!tmp) return;
 
 	if (tmp->key) free(tmp->key);
-	if (tmp->sec) sectionfree(tmp->sec);
+	if (tmp->sec) section_free(tmp->sec);
 
 	free(label);
 }
@@ -289,7 +289,7 @@ static int parser_arithmetic(section_t *sec, const char **tokens, unsigned opcod
 	if (reg == bad - 2) return -1;
 
 	if (sec->cnt + 1 > sec->siz)
-		if (sectionrealloc(sec, sec->siz * 2) < 0)
+		if (section_realloc(sec, sec->siz * 2) < 0)
 			return -1;
 
 	sec->instr[sec->cnt].opcode  = opcode;
@@ -305,7 +305,7 @@ static int parser_shift(section_t *sec, const char **tokens, unsigned opcode)
 	unsigned long shamt = strtoul(tokens[1], NULL, 0);
 
 	if (sec->cnt + 1 > sec->siz)
-		if (sectionrealloc(sec, sec->siz * 2) < 0)
+		if (section_realloc(sec, sec->siz * 2) < 0)
 			return -1;
 
 	sec->instr[sec->cnt].opcode  = opcode;

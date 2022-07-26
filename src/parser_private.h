@@ -24,7 +24,7 @@
 
 #include <stddef.h>
 
-#include "section.h"
+#include "asm/section.h"
 
 
 #define SECSIZ   64

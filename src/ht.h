@@ -1,5 +1,5 @@
 /*
- * hashtable.h -- hash table implementation
+ * ht.h -- hash table implementation
  * Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef JAVK_AS_HASHTABLE
-#define JAVK_AS_HASHTABLE
+#ifndef JAVK_AS_HT
+#define JAVK_AS_HT
 
 
 #include <stddef.h>
@@ -39,10 +39,10 @@ typedef struct ht_s {
 } ht_t;
 
 
+ht_t *ht_alloc(void);
+void  ht_free(ht_t *ht, void (*free_val)(void *ptr));
 void *ht_get(const ht_t *ht, const void *key, size_t len);
 int   ht_set(ht_t *ht, const void *key, size_t len, void *val);
-ht_t *htalloc(void);
-void  htfree(ht_t *ht, void (*free_val)(void *ptr));
 
 
-#endif /* JAVK_AS_HASHTABLE */
+#endif /* JAVK_AS_HT */

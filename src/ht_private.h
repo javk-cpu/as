@@ -1,5 +1,5 @@
 /*
- * hashtable_private.h -- hash table implementation
+ * ht_private.h -- hash table implementation
  * Copyright (C) 2022  Jacob Koziej <jacobkoziej@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,11 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef JAVK_AS_HASHTABLE_PRIVATE
-#define JAVK_AS_HASHTABLE_PRIVATE
+#ifndef JAVK_AS_HT_PRIVATE
+#define JAVK_AS_HT_PRIVATE
 
 
-#include "hashtable.h"
+#include "ht.h"
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -36,4 +36,4 @@ static int      ht_set_private(ht_t *ht, void *key, size_t len, void *val, bool 
 static int      rehash(ht_t *ht);
 
 
-#endif /* JAVK_AS_HASHTABLE_PRIVATE */
+#endif /* JAVK_AS_HT_PRIVATE */
